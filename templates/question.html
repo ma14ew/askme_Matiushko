@@ -1,0 +1,57 @@
+{% extends "inc/base.html" %}
+{% load static %}
+{% load bootstrap5 %}
+{% block content %}
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+    <div class="container_q">
+        <div class="row" style="margin-left: 40px">
+            <div class="col-8">
+                <div class="questionBig pb-2 mb-4  border-bottom border-3 border-secondary">
+                    <div class="row">
+                        <div class="col-2" style="padding: 0px;">
+                            <div class="avatar_150">
+                                <img src="../{{ question.user.avatar }}" alt=""/>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <h2 class="question-title" style="margin-left: 15px">{{ question.title }}</h2>
+                            <div class="question-text" style="margin-left: 15px">
+                                {{ question.text }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4" style="padding: 0px;">
+                            <div class="ContainerWhite">
+                                <div class="likeCount">{{ question.likes }}</div>
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group"
+                                     style="margin:20px;">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio1">Like</label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio2">Dislike</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            {% include "inc/tag_item.html" with tag=question.tag %}
+                        </div>
+                    </div>
+                </div>
+                {% for answer in page_obj %}
+                    {% include "inc/answer_item.html" %}
+                {% endfor %}
+                {% include "inc/paginator.html" %}
+                <div class="mb-3 pb-2 mb-4  border-top border-3 border-secondary"
+                     style="padding-top:30px; margin-top:30px; width: 852px;">
+                    <form novalidate action="{% url 'question' question_id=question.id %}" method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form  form %}
+                        <button type="submit" class="btn btn-primary">Answer!</button>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

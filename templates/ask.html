@@ -1,0 +1,17 @@
+{% extends "inc/base.html" %}
+{% load static %}
+{% load bootstrap5 %}
+{% block content %}
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+    <div class="container_q">
+        <div class="row" style="margin-left:60px;">
+            <div class="col-8" style=" margin-top:30px">
+                <h1 style=" margin-bottom:30px;">New Question</h1>
+                <form novalidate action="/ask" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form  form %}
+                    <button type="submit" class="btn btn-primary">Ask!</button>
+                </form>
+            </div>
+{% endblock %}
